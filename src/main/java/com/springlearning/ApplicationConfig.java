@@ -9,7 +9,7 @@ public class ApplicationConfig {
     @Bean
     public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
         FreeMarkerConfigurationFactoryBean fmConfigFactoryBean = new FreeMarkerConfigurationFactoryBean();
-        fmConfigFactoryBean.setTemplateLoaderPath("/templates/");
+        fmConfigFactoryBean.setTemplateLoaderPath("classpath:/templates/");
         return fmConfigFactoryBean;
     }
 }

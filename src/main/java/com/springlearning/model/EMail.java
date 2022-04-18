@@ -40,4 +40,11 @@ public class EMail {
     public void setModel(Map<String, Object> model) {
         this.model = model;
     }
+	@Override
+	public String toString() {
+		return "EMail [to=" + to + ", from=" + from + ", subject=" + subject + ", content=" + content + ", model="
+				+ model + "]";
+	}
+    
+    
 }

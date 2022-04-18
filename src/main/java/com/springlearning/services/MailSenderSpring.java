@@ -20,6 +20,7 @@ import java.util.Map;
 public class MailSenderSpring {
     @Autowired
     JavaMailSender javaMailSender;
+    
     @Qualifier("getFreeMarkerConfiguration")
     @Autowired
     Configuration fmConfiguration;
@@ -51,6 +52,7 @@ public class MailSenderSpring {
     }
 
     public void sendEmailWithTemplate(EMail mail) {
+    	
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
 
@@ -59,20 +61,21 @@ public class MailSenderSpring {
             mimeMessageHelper.setSubject(mail.getSubject());
             mimeMessageHelper.setFrom(mail.getFrom());
             mimeMessageHelper.setTo(mail.getTo());
-            mail.setContent(geContentFromTemplate(mail.getModel()));
+            mail.setContent(getContentFromTemplate(mail.getModel()));
             mimeMessageHelper.setText(mail.getContent(), true);
-
+            mimeMessageHelper.addAttachment("Google Photo", new ClassPathResource("img.png"));
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        
     }
 
-    public String geContentFromTemplate(Map<String, Object> model) {
+    public String getContentFromTemplate(Map<String, Object> model) {
         StringBuffer content = new StringBuffer();
 
         try {
-            content.append(FreeMarkerTemplateUtils.processTemplateIntoString(fmConfiguration.getTemplate("email-template.flth"), model));
+            content.append(FreeMarkerTemplateUtils.processTemplateIntoString(fmConfiguration.getTemplate("email.flth"), model));
         } catch (Exception e) {
             e.printStackTrace();
         }
